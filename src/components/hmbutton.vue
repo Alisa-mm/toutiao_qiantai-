@@ -19,7 +19,7 @@ export default {
  .btn{
        width: 318*100vw/360; 
        height: 50px;
-       background-color: rgb(70, 158, 12);
+       background-color: red;
        border-radius: 25px;
        line-height: 50px;
        text-align: center;

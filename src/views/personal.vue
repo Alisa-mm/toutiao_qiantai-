@@ -1,6 +1,6 @@
 <template>
   <div class="personal">
-      lallll
+      个人中心页面
   </div>
 </template>
 

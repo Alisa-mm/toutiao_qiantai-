@@ -26,5 +26,17 @@ let router = new VueRouter({
         }
     ]
 })
+router.beforeEach((to,from,next)=>{
+    if(to.path.indexOf('/personal')===0){
+        let token = localStorage.getItem('key')
+        if(token){
+            next()
+        }else{
+            next({name:'Login'})
+        }
+    }else{
+        next()
+    }
+})
 // 暴露路由
 export default router
