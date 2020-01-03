@@ -5,6 +5,7 @@ import VueRouter from 'vue-router'
 // 挂载
 Vue.use(VueRouter)
 
+
 // 引入路由所映射的组件
 import Login from '@/views/login.vue'
 //创建路由

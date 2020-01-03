@@ -26,8 +26,13 @@ methods:{
     },
     handleBlur(){
         let value = event.target.value
-        if(this.rules && this.rules.test(value)){
-            console.log(this.msg || '输入不正确');
+        if(this.rules && !this.rules.test(value)){
+            // console.log(this.msg || '输入不正确');
+            // 换成提示框
+            this.$toast.fail({
+                 message:this.msg || '输入不正确',
+                 duration:3000
+            })
             
         }
     }

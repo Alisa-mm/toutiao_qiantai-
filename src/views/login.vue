@@ -47,7 +47,7 @@ export default {
   },
   methods: {
     login() {
-      console.log("aaa");
+      console.log(this.user);
     }
   }
 };
