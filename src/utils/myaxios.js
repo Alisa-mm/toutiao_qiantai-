@@ -7,5 +7,7 @@ axios.defaults.baseURL='http://localhost:3000'
 
 // ......这里只配置了基准路径  需要配置的还有很多 用到的就配置
 
+// aafaa
+
 // 暴露出去
 export default axios
