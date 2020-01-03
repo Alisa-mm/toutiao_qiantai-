@@ -22,16 +22,19 @@
       msg="请输入3-16位的密码" 
       v-model="user.password"></hminput>
       <!-- 使用封装好的按钮 -->
-      <hmbutton @click="login">登录</hmbutton>
+      <hmbutton @click="isclick">登录</hmbutton>
     </div>
   </div>
 </template>
 
 <script>
+// import axios from '@/utils/myaxios.js'
 // 引入封装的button按钮
 import hmbutton from "@/components/hmbutton.vue";
 // 引入封装的文本框组件
 import hminput from "@/components/hminput.vue";
+// 引入封装好的api方法
+import {login} from '@/api/user.js'
 export default {
   data() {
     return {
@@ -46,8 +49,32 @@ export default {
     hminput
   },
   methods: {
-    login() {
-      console.log(this.user);
+    // login(){
+    // var fff =  axios({
+    //     method:'post',
+    //     url:'/login',//login登录页面
+    //     data:this.user
+    // })
+    //   console.log(fff);
+      
+    // }
+    // 这里用到async await 可以让我们以同步的方式来调用异步方法，意味着我们可以直接获取异步操作的返回结果
+    // await必须处于async函数中，async标记的函数就是await关键字所在的函数
+    async isclick() {
+      // console.log(this.user);
+      // 验证
+      if(/^(\d{5,6})$|^(1\d{10})$/.test(this.user.username) && /^\S{3,16}$/.test(this.user.password)){
+        let res = await login(this.user)
+        console.log(res);
+        if(res.data.mssage=='用户不存在'){
+          // 给出用户提示信息
+          this.$toast.fail(res.data.mssage)
+        }else{
+          // 实现页面跳转 跳转到个人中心
+        }
+      }else{
+        this.$toast.fail('用户数据输入不合法')
+      }
     }
   }
 };
