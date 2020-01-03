@@ -8,6 +8,8 @@ Vue.use(VueRouter)
 
 // 引入路由所映射的组件
 import Login from '@/views/login.vue'
+
+import Personal from '@/views/personal.vue'
 //创建路由
 let router = new VueRouter({
     // 配置路由
@@ -16,6 +18,11 @@ let router = new VueRouter({
             name:'Login',
             path:'/',
             component:Login
+        },
+        {
+            name:'Personal',
+            path:'/personal',
+            component:Personal
         }
     ]
 })

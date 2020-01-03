@@ -71,6 +71,7 @@ export default {
           this.$toast.fail(res.data.mssage)
         }else{
           // 实现页面跳转 跳转到个人中心
+          this.$router.push({name:'Personal'})
         }
       }else{
         this.$toast.fail('用户数据输入不合法')
