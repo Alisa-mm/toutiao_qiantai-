@@ -9,3 +9,11 @@ export const login = (data) => {
         data:data
     })
 }
+// 2.注册
+export const register = data=>{
+    return axios({
+        method:'post',
+        url:'/register',
+        data
+    })
+}

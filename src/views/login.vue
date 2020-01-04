@@ -65,7 +65,7 @@ export default {
       // 验证
       if(/^(\d{5,6})$|^(1\d{10})$/.test(this.user.username) && /^\S{3,16}$/.test(this.user.password)){
         let res = await login(this.user)
-        console.log(res);
+        // console.log(res);
         if(res.data.mssage=='用户不存在'){
           // 给出用户提示信息
           this.$toast.fail(res.data.mssage)
