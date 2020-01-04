@@ -10,6 +10,8 @@ Vue.use(VueRouter)
 import Login from '@/views/login.vue'
 
 import Personal from '@/views/personal.vue'
+
+import Register from '@/views/register.vue'
 //创建路由
 let router = new VueRouter({
     // 配置路由
@@ -23,9 +25,15 @@ let router = new VueRouter({
             name:'Personal',
             path:'/personal',
             component:Personal
+        },
+        {
+            name:'Register',
+            path:'/register',
+            component:Register
         }
     ]
 })
+// 导航守卫
 router.beforeEach((to,from,next)=>{
     if(to.path.indexOf('/personal')===0){
         let token = localStorage.getItem('key')
