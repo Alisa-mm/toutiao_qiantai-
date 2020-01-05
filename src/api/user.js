@@ -24,3 +24,11 @@ export const getUserById=(id)=>{
         // headers:{'Authorization':localStorage.getItem('totiao_token')}
     })
 }
+// 4.更新个人信息
+export const updateUserById=(id,data)=>{
+    return axios({
+        method:'post',
+        url:`/user_update/${id}`,
+        data
+    })
+}
