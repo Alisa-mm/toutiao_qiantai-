@@ -3,7 +3,7 @@
       个人中心页面
   </div> -->
   <div class="personal">
-    <router-link to="/edit_profile">
+    <router-link :to="{path:`/editPersonal/${currentUser.id}`}">
       <div class="profile">
         <!-- $axios.defaults.baseURL读取axios的服务器路径 -->
         <img :src="currentUser.head_img" alt />
@@ -21,7 +21,7 @@
 <van-cell class="cell" title="我的收藏" is-link value="文章/视频" />
 <van-cell class="cell" title="设置"  /> -->
 <!-- 下面这个是使用封装好的单元格 -->
- <hmcell title='我的关注' desc='关注的用户'></hmcell>
+    <hmcell title='我的关注' desc='关注的用户'></hmcell>
     <hmcell title='我的跟帖' desc='跟帖/回复'></hmcell>
     <hmcell title='我的收藏' desc='文章/视频'></hmcell>
     <hmcell title='设置'></hmcell>
