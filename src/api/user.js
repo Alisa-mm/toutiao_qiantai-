@@ -21,6 +21,6 @@ export const register = data=>{
 export const getUserById=(id)=>{
     return axios({
         url:`/user/${id}`,
-        headers:{'Authorization':localStorage.getItem('totiao_token')}
+        // headers:{'Authorization':localStorage.getItem('totiao_token')}
     })
 }

@@ -10,7 +10,7 @@ axios.defaults.baseURL='http://localhost:3000'
 axios.interceptors.request.use(function (config) {
     // 在发送请求之前做些什么
     // 获取token
-    let token = localStorage.getItem('toutiao_41_token')
+    let token = localStorage.getItem('totiao_token')
     // 判断是否有token如果有，则以请求头的方式进行传递
     if(token){
         config.headers.Authorization = token

@@ -57,7 +57,7 @@ async mounted(){
     this.currentUser=res.data.data
      this.currentUser.head_img = 'http://127.0.0.1:3000' + this.currentUser.head_img
   }else if(res.data.message=='用户信息验证失败'){
-    this.router.push({name:'Login'})
+    this.$router.push({name:'Login'})
   }
 }
 }
