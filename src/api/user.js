@@ -17,3 +17,10 @@ export const register = data=>{
         data
     })
 }
+// 3.根据id获取用户详情
+export const getUserById=(id)=>{
+    return axios({
+        url:`/user/${id}`,
+        headers:{'Authorization':localStorage.getItem('totiao_token')}
+    })
+}

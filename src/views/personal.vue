@@ -6,12 +6,12 @@
     <router-link to="/edit_profile">
       <div class="profile">
         <!-- $axios.defaults.baseURL读取axios的服务器路径 -->
-        <img src="http://img1.imgtn.bdimg.com/it/u=3757784226,1202878475&fm=26&gp=0.jpg" alt />
+        <img :src="currentUser.head_img" alt />
         <div class="profile-center">
           <div class="name">
-            <span class="iconfont iconxingbienan"></span>我就是我
+            <span class="iconfont iconxingbienan"></span>{{currentUser.nickname}}
           </div>
-          <div class="time">2019-9-24</div>
+          <div class="time">{{currentUser.create_date}}</div>
         </div>
         <span class="iconfont iconjiantou1"></span>
       </div>
@@ -29,9 +29,30 @@
 
 <script>
 import hmbutton from "@/components/hmbutton.vue";
+import {getUserById} from '@/api/user.js'
 export default {
+  data () {
+    return {
+      currentUser:{
+        // head_img:''
+      },
+     
+    }
+  },
 components:{
   hmbutton
+}, 
+async mounted(){
+  // console.log(this.$route.params.id)//拿到id为1
+  let res = await getUserById(this.$route.params.id)
+  // console.log(res);
+  if(res.data.message=='获取成功'){
+    // console.log(res);
+    this.currentUser=res.data.data
+     this.currentUser.head_img = 'http://127.0.0.1:3000' + this.currentUser.head_img
+  }else if(res.data.message=='用户信息验证失败'){
+    this.router.push({name:'Login'})
+  }
 }
 }
 </script>
