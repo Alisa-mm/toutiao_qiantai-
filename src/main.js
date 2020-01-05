@@ -4,8 +4,8 @@ import App from './App.vue'
 import router from '@/router/index.js'
 
 // 引入提示插件
-import { Toast } from 'vant'
-Vue.use(Toast)
+import { Toast , Cell, CellGroup } from 'vant'
+Vue.use(Toast).use(Cell).use(CellGroup)
 
 Vue.config.productionTip = false
 

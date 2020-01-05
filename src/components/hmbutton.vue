@@ -26,5 +26,6 @@ export default {
        color:#fff;
        font-weight: bold;
        font-size: 20px;
+       margin:20px auto
  }
 </style>

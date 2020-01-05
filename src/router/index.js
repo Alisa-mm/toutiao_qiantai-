@@ -23,7 +23,7 @@ let router = new VueRouter({
         },
         {
             name:'Personal',
-            path:'/personal',
+            path:'/personal/:id',
             component:Personal
         },
         {
@@ -36,7 +36,7 @@ let router = new VueRouter({
 // 导航守卫
 router.beforeEach((to,from,next)=>{
     if(to.path.indexOf('/personal')===0){
-        let token = localStorage.getItem('key')
+        let token = localStorage.getItem('totiao_token')
         if(token){
             next()
         }else{

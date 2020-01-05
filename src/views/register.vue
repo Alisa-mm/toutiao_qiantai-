@@ -19,7 +19,7 @@
       <hmbutton @click="Register">注册</hmbutton>
       <p class="tips">
         有账号？
-        <a href="#/login" class>去登录</a>
+        <a href="#/" class>去登录</a>
       </p>
     </div>
   </div>

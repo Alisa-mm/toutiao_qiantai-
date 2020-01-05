@@ -23,6 +23,9 @@
       v-model="user.password"></hminput>
       <!-- 使用封装好的按钮 -->
       <hmbutton @click="isclick">登录</hmbutton>
+        <p class="tips">没有账号？
+        <a href="#/register" class>去注册</a>
+      </p>
     </div>
   </div>
 </template>
@@ -65,14 +68,19 @@ export default {
       // 验证
       if(/^(\d{5,6})$|^(1\d{10})$/.test(this.user.username) && /^\S{3,16}$/.test(this.user.password)){
         let res = await login(this.user)
-        // console.log(res);
+        console.log(res);
         if(res.data.mssage=='用户不存在'){
           // 给出用户提示信息
           this.$toast.fail(res.data.mssage)
         }else{
+          // 把token值存起来
+           localStorage.setItem('totiao_token',res.data.data.token)
+          //  把返回的数据存在本地 以便之后使用
+          localStorage.setItem('loginData',res.data.data.user)
           // 实现页面跳转 跳转到个人中心
-          localStorage.setItem('key',res.data.data.token)
-          this.$router.push({name:'Personal'})
+          // this.$router.push({name:'Personal'})
+          this.$router.push({path:`/personal/${res.data.data.user.id}`})
+
         }
       }else{
         this.$toast.fail('用户数据输入不合法')
