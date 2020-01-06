@@ -11,7 +11,7 @@
           <div class="name">
             <span class="iconfont iconxingbienan"></span>{{currentUser.nickname}}
           </div>
-          <div class="time">{{currentUser.create_date}}</div>
+          <div class="time" >{{currentUser.create_date | dateFormat}}</div>
         </div>
         <span class="iconfont iconjiantou1"></span>
       </div>
@@ -34,8 +34,12 @@
 
 <script>
 import hmbutton from "@/components/hmbutton.vue";
+
 import {getUserById} from '@/api/user.js'
+
 import hmcell from '@/components/hmcell.vue'
+
+import {dateFormat} from '@/utils/hmfilter'
 export default {
   data () {
     return {
@@ -48,6 +52,10 @@ export default {
 components:{
   hmbutton,hmcell
 }, 
+// 注册过滤器
+ filters:{
+    dateFormat
+  },
 async mounted(){
   // console.log(this.$route.params.id)//拿到id为1
   let res = await getUserById(this.$route.params.id)
