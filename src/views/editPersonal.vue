@@ -16,7 +16,7 @@
       @click="passwordshow=!passwordshow"
       type="password"
     ></hmcell>
-    <hmcell title="性别" :desc="currentUser.gender===0?'女':'男'"></hmcell>
+    <hmcell title="性别" @click="gendershow=!gendershow" :desc="currentUser.gender===0?'女':'男'"></hmcell>
     <!-- 添加昵称对话框 -->
     <van-dialog v-model="nicknameshow" @confirm="updateNickname" title="修改昵称" show-cancel-button>
       <van-field :value="currentUser.nickname" ref="nick" label="昵称" placeholder="请输入昵称" required />
@@ -25,6 +25,10 @@
     <van-dialog v-model="passwordshow" title="修改密码" show-cancel-button :beforeClose="beforeClose">
       <van-field ref="originPass" label="原密码" placeholder="请输入原密码" required />
       <van-field ref="newPass" label="新密码" placeholder="请输入新密码" required />
+    </van-dialog>
+    <!-- 添加性别对话框 -->
+    <van-dialog v-model="gendershow" @confirm="updateGender" title="修改性别" show-cancel-button>
+       <van-picker :columns="['女','男']" :default-index="currentUser.gender" @change="onChange"/>
     </van-dialog>
   </div>
 </template>
@@ -46,7 +50,9 @@ export default {
     return {
       currentUser: {},
       nicknameshow: false,
-      passwordshow: false
+      passwordshow: false,
+      gendershow:false
+
     };
   },
   components: {
@@ -109,57 +115,7 @@ export default {
         this.$toast.fail("修改失败");
       }
     },
-    // 修改密码
-    // async updatePassword(){
-    //   // 获取用户输入的原密码，判断原密码是否匹配
-    //   // 匹配的话，再获取新密码，验证是否符合正则，符合的话获取新密码 再发送请求 修改密码
-    //   let originPass = this.$refs.originPass.$refs.input.value
-    //   // console.log(this.currentUser);
-    //   if(originPass ==this.currentUser.password){
-    //     let newPass = this.$refs.newPass.$refs.input.value
-    //     if(/^\S{3,16}$/.test(newPass)){
-    //       // 如果新密码符合规范，就发请求修改密码
-    //      let res = await updateUserById(this.currentUser.id,{password:newPass});
-    //       console.log(res);
-
-    //       if(res.data.messsage=="修改成功"){
-    //         this.currentUser.password=newPass
-    //         this.$toast.success('修改成功')
-    //       }else{
-    //         this.$toast.fail('修改失败')
-
-    //       }
-    //     }
-    //   }
-    // },
-    // dialog关闭前的回调函数
-// 用户体验
-// beforeClose(action, done) {
-//     console.log(action);
-//     // 1.如果用户单击的是确认，那么就需要判断原密码是否输入正确
-//     if (action === "confirm") {
-//         // 2.获取用户输入的原密码
-//         let originPass = this.$refs.originPass.$refs.input.value;
-//         // 获取原密码进行密码否正确的判断
-//         if (originPass !== this.currentUser.password) {
-//             // 3.给出提示
-//             this.$toast.fail("原密码输入不正确");
-//             // 4.阻止dialog的关闭
-//             this.$refs.originPass.$refs.input.select();
-//             this.$refs.originPass.$refs.input.focus();
-//             done(false);
-//         } else if (!/^\S{3,16}$/.test(this.$refs.newPass.$refs.input.value))         {
-//             this.$toast.fail("请输入3-16位的新密码");
-//             done(false);
-//         }else{
-//             // 如果这里没有添加done,那么窗口不会关闭且在转啊转
-//             done()
-//         }
-//     } else {
-//         done();
-//     }
-// }
-    // 修改密码 简化
+    // 修改密码 
     // beforeClose：弹框关闭前的回调函数
     // beforeClose要当做一个属性来用
     async beforeClose(action, done) {
@@ -199,6 +155,23 @@ export default {
       }else{
         done()
       }
+    },
+    // 修改性别
+    async updateGender(){
+      // console.log(this.currentUser.gender);
+      let res = await updateUserById(this.currentUser.id,{gender:this.currentUser.gender})
+      console.log(res);
+      if(res.data.message=="修改成功"){
+        // 把后台返回的数据给到当前的gender实现性别的修改
+        this.currentUser.gender=res.data.data.gender
+      }
+      
+      
+    },
+    // onChange事件 点击的时候获取当前的索引值，然后复制给当前的gender，然后再拿这个数据传给后台，把修改后的数据给到当前的gender
+      onChange(picker, value, index) {
+      this.$toast(`当前值：${value}, 当前索引：${index}`);
+      this.currentUser.gender=index
     }
   }
 };

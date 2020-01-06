@@ -14,13 +14,16 @@ import Personal from '@/views/personal.vue'
 import Register from '@/views/register.vue'
 
 import EditPersonal from '@/views/editPersonal.vue'
+
+import Index from '@/views/index.vue'
+
 //创建路由
 let router = new VueRouter({
     // 配置路由
     routes:[
         {
             name:'Login',
-            path:'/',
+            path:'/login',
             component:Login
         },
         {
@@ -37,6 +40,11 @@ let router = new VueRouter({
             name:'EditPersonal',
             path:'/editPersonal/:id',
             component:EditPersonal
+        },
+        {
+            name:'Index',
+            path:'/',
+            component:Index
         }
     ]
 })

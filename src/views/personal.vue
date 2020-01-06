@@ -15,7 +15,8 @@
         </div>
         <span class="iconfont iconjiantou1"></span>
       </div>
-      <!-- 下面的是用vant框架里面的单元格样式 -->
+    </router-link>
+     <!-- 下面的是用vant框架里面的单元格样式 -->
 <!-- <van-cell class="cell" title="我的关注" is-link value="关注的用户" />
 <van-cell class="cell" title="我的跟帖" is-link value="跟帖/回复" />
 <van-cell class="cell" title="我的收藏" is-link value="文章/视频" />
@@ -26,8 +27,7 @@
     <hmcell title='我的收藏' desc='文章/视频'></hmcell>
     <hmcell title='设置'></hmcell>
 <!-- 使用封装好的按钮 -->
-<hmbutton>退出</hmbutton>
-    </router-link>
+<hmbutton @click="exit">退出</hmbutton>
   </div>
 
 </template>
@@ -58,6 +58,15 @@ async mounted(){
      this.currentUser.head_img = 'http://127.0.0.1:3000' + this.currentUser.head_img
   }else if(res.data.message=='用户信息验证失败'){
     this.$router.push({name:'Login'})
+  }
+},
+methods:{
+  exit(){
+    localStorage.removeItem('totiao_token');
+     // 加到首页
+    this.$router.push({name:'Index'})
+    
+    
   }
 }
 }

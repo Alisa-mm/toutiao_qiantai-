@@ -62,7 +62,7 @@ export default {
           // 注册成功
           this.$toast.fail(res.data.message);
           // 实现页面跳转 跳转到个人中心
-          this.$router.push({ name: "Personal" });
+          this.$router.push({ name: "Login" });
         }
       }else{
            this.$toast.fail('用户数据输入不合法')
