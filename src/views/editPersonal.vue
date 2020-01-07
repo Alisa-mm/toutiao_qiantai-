@@ -165,8 +165,6 @@ export default {
         // 把后台返回的数据给到当前的gender实现性别的修改
         this.currentUser.gender=res.data.data.gender
       }
-      
-      
     },
     // onChange事件 点击的时候获取当前的索引值，然后复制给当前的gender，然后再拿这个数据传给后台，把修改后的数据给到当前的gender
       onChange(picker, value, index) {
