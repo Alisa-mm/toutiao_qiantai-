@@ -51,7 +51,7 @@ let router = new VueRouter({
 // 导航守卫
 router.beforeEach((to,from,next)=>{
     if(to.path.indexOf('/personal')===0){
-        let token = localStorage.getItem('totiao_token')
+        let token = localStorage.getItem('toutiao_token')
         if(token){
             next()
         }else{

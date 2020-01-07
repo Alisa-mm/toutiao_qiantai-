@@ -74,9 +74,9 @@ export default {
           this.$toast.fail(res.data.mssage)
         }else{
           // 把token值存起来
-           localStorage.setItem('totiao_token',res.data.data.token)
+           localStorage.setItem('toutiao_token',res.data.data.token)
           //  把返回的数据存在本地 以便之后使用
-          localStorage.setItem('loginData',res.data.data.user)
+          localStorage.setItem('userData',JSON.stringify(res.data.data.user))
           // 实现页面跳转 跳转到个人中心
           // this.$router.push({name:'Personal'})
           this.$router.push({path:`/personal/${res.data.data.user.id}`})

@@ -1,6 +1,7 @@
 <template>
 <!-- 顶部栏 -->
-  <div class="header">
+ <div class="index">
+    <div class="header">
     <div class="logo">
        <span class="iconfont iconnew"></span>
     </div>
@@ -8,15 +9,43 @@
       <span><van-icon name="search" /></span>
       <span>搜索新闻</span>
     </div>
-    <div class="user">
-      <span><van-icon name="manager-o" /></span>
+    <div class="user" @click="$router.push({path:`personal/${id}`})" >
+      <van-icon name="manager-o" />
     </div>
   </div>
+  <!-- 标签页 -->
+  <div class="nav">
+    <van-tabs v-model="active" sticky swipeable>
+      <!-- 遍历cateList动态生成标签页 -->
+  <van-tab :title="value.name" v-for='value in cateList' :key='value.id'>内容 1</van-tab>
+</van-tabs>
+  </div>
+ </div>
 </template>
 
 <script>
+import {getCateList} from '@/api/cate.js'
 export default {
+  data () {
+    return {
+      id:'',
+      active:localStorage.getItem('toutiao_token')? 1 :0,
+      cateList:[]
 
+    }
+  },
+async mounted () {
+  // 获取用户id
+  this.id = JSON.parse(localStorage.getItem('userData')||'{}').id
+  // console.log(this.id);//undefined
+  //获取所有栏目数据
+  let res = await getCateList();
+  console.log(res);
+  this.cateList=res.data.data
+  
+
+  
+}
 }
 </script>
 
