@@ -32,3 +32,9 @@ export const updateUserById=(id,data)=>{
         data
     })
 }
+// 5.根据文章id获取文章详情
+export const getArticleById =(id)=>{
+    return axios({
+        url:`/post/${id}`
+    })
+}

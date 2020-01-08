@@ -17,6 +17,8 @@ import EditPersonal from '@/views/editPersonal.vue'
 
 import Index from '@/views/index.vue'
 
+import ArticleDetail from '@/views/articleDetail.vue'
+
 //创建路由
 let router = new VueRouter({
     // 配置路由
@@ -45,7 +47,12 @@ let router = new VueRouter({
             name:'Index',
             path:'/',
             component:Index
-        }
+        },
+        {
+            name:'ArticleDetail',
+            path:'/articleDetail/:id',
+            component:ArticleDetail
+        },
     ]
 })
 // 导航守卫

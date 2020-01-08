@@ -32,7 +32,7 @@
             <!-- 添加下拉刷新的结构 -->
             <van-pull-refresh v-model="value.isLoading"  success-text="刷新成功" @refresh="onRefresh">
                <!-- 文章列表数据模块 -->
-            <hmarticle v-for="item in value.postList" :key="item.id" :post="item"></hmarticle>
+            <hmarticle v-for="item in value.postList" :key="item.id" :post="item"  @click="$router.push({path:`/articleDetail/${item.id}`})"></hmarticle>
             </van-pull-refresh>
           </van-list>
         </van-tab>
@@ -109,16 +109,18 @@ export default {
         pageSize: this.cateList[this.active].pageSize,
         category: this.cateList[this.active].id
       });
-      console.log(res1.data.data);
+      // console.log(res1.data.data);
       // 将当前栏目的loading重置为false //重置之后就不会一直加载
       this.cateList[this.active].loading = false;
       // 重置isLoading标记
-      this.cateList[this.active].isLoading=false //重置之后就不会一直加载
+      this.cateList[this.active].isLoading=false //重置之后就不会一直加载 
       // 4.将finished设置为false，以便可以继续上拉加载
-      this.cateList[this.active].finished=false
+      // this.cateList[this.active].finished=false //这个可以写到下面if后面else中
       //  如果所有数据加载完毕，则需要手动的将当前栏目的finished重置为true,以显示没有更多数据的提示
       if (res1.data.data.length < this.cateList[this.active].pageSize) {
         this.cateList[this.active].finished = true;
+      }else{
+      this.cateList[this.active].finished=false
       }
       // 将数据存进当前的postList栏目中
       // this.cateList[this.active].postList=res1.data.data;

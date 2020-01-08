@@ -1,6 +1,6 @@
 <template>
   <!-- 左右的文章结构 -->
-  <div class="article" v-if="post.type===1 && post.cover.length <=2">
+  <div class="article" v-if="post.type===1 && post.cover.length <=2" @click="handlerClick">
     <div class="left">
       <p class="content">{{post.title}}</p>
       <p class="info">
@@ -11,7 +11,7 @@
     <img :src="post.cover[0].url" alt />
   </div>
   <!--上下的视频结构 -->
-  <div class="articleV" v-else-if="post.type===2">
+  <div class="articleV" v-else-if="post.type===2" @click="handlerClick">
     <!-- 上面标题 -->
     <p class="content">{{post.title}}</p>
     <!-- 视频播放区域 -->
@@ -29,7 +29,7 @@
     </p>
   </div>
   <!-- 文章列表的三图样式 -->
-  <div class="articleT" v-else-if="post.type===1 && post.cover.length >=3">
+  <div class="articleT" v-else-if="post.type===1 && post.cover.length >=3" @click="handlerClick">
     <p class="content">{{post.title}}</p>
     <div class="imgs">
       <img :src="item.url" alt v-for='item in post.cover' :key='item.id'/>
@@ -43,7 +43,14 @@
 
 <script>
 export default {
-  props: ["post"]
+  props: ["post"],
+  methods:{
+    // 发出事件
+    handlerClick(event){
+      this.$emit('click',event)
+    }
+  }
+
 };
 </script>
 
