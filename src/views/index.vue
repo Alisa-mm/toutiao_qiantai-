@@ -65,7 +65,7 @@ export default {
         pageSize: 10 //这个栏目每页所显示的记录数
       };
     });
-    console.log( this.cateList);
+    // console.log( this.cateList);
     //  获取默认栏目的新闻数据，并动态渲染  默认栏目就是this.cateList[this.active]
     // 封装
     this.init()
@@ -93,7 +93,7 @@ export default {
       pageSize: this.cateList[this.active].pageSize,
       category: this.cateList[this.active].id
     });
-    // console.log(res1);
+    console.log(res1);
 
     // 将数据存进当前的postList栏目中
     this.cateList[this.active].postList = res1.data.data;
