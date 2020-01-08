@@ -20,8 +20,13 @@
       <van-tabs v-model="active" sticky swipeable>
         <!-- 遍历cateList动态生成标签页 -->
         <van-tab :title="value.name" v-for="value in cateList" :key="value.id">
-          <!-- 文章模块 -->
+          <!-- 添加上拉加载结构 -->
+          <van-list v-model="value.loading" :finished="value.finished" finished-text="没有更多了" @load="onLoad" :immediate-check='false' :offset="10">
+            <!-- 文章模块 -->
           <hmarticle v-for="item in value.postList" :key="item.id" :post="item"></hmarticle>
+          </van-list>
+           
+         
         </van-tab>
       </van-tabs>
     </div>
@@ -62,7 +67,10 @@ export default {
         ...value,
         postList: [],
         pageIndex: 1,
-        pageSize: 10 //这个栏目每页所显示的记录数
+        pageSize: 5 ,//这个栏目每页所显示的记录数
+        loading:false,//这个栏目的加载状态
+        finished:false,//这个栏目的数据是否完全加载完毕
+
       };
     });
     // console.log( this.cateList);
@@ -93,10 +101,27 @@ export default {
       pageSize: this.cateList[this.active].pageSize,
       category: this.cateList[this.active].id
     });
-    console.log(res1);
-
+    console.log(res1.data.data);
+    // 将当前栏目的loading重置为false
+  this.cateList[this.active].loading = false 
+  //  如果所有数据加载完毕，则需要手动的将当前栏目的finished重置为true,以显示没有更多数据的提示
+  if(res1.data.data.length<this.cateList[this.active].pageSize){
+    this.cateList[this.active].finished=true
+  }
     // 将数据存进当前的postList栏目中
-    this.cateList[this.active].postList = res1.data.data;
+    // this.cateList[this.active].postList=res1.data.data;
+    this.cateList[this.active].postList.push(...res1.data.data)
+
+
+ },
+ onLoad(){
+  //  加载这个栏目的下一页数据
+  this.cateList[this.active].pageIndex++;
+  //加一下延迟 看效果
+  setTimeout(()=>{
+    // 重新发axios请求 加载数据
+    this.init()
+  },1000)
  }
   }
 };
