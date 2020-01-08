@@ -5,7 +5,10 @@
         <van-icon name="arrow-left back" @click="$router.back()" />
         <span class="iconfont iconnew new"></span>
       </div>
-      <span>关注</span>
+      <span
+        :class="{active:article.has_follow}"
+        @click="followUser"
+      >{{article.has_follow?'已关注':'关注'}}</span>
     </div>
     <div class="detail">
       <div class="title">{{article.title}}</div>
@@ -14,17 +17,17 @@
         <span>2019-9-9</span>
       </div>
       <!-- 如果type=1 就是文章类型 就用html解析就可以 -->
-      <div class="content" v-html="article.content" v-if="article.type===1">
-      </div>
+      <div class="content" v-html="article.content" v-if="article.type===1"></div>
       <!-- 如果type=2 就是视频类型 加video -->
-      <video :src="article.content" v-if='article.type===2' controls></video>
+      <video :src="article.content" v-if="article.type===2" controls></video>
       <!-- controls是否显示控制面板  
       autoplay:自动播放，在chrome是有问题，不会响应
       loop:是否循环播放
-      poster:首帧画面 -->
+      poster:首帧画面-->
       <div class="opt">
-        <span class="like">
-          <van-icon name="good-job-o" />{{article.like_length}}
+        <span class="like" :class="{active:article.has_like}" @click="likeThisArticle">
+          <van-icon name="good-job-o" />
+          {{article.like_length}}
         </span>
         <span class="chat">
           <van-icon name="chat" class="w" />微信
@@ -51,21 +54,54 @@
 </template>
 
 <script>
-import {getArticleById} from '@/api/user.js'
+// 引入通过id获取文章详情的方法
+import { getArticleById } from "@/api/articles.js";
+// 引入关注和取消关注用户的方法
+import { followUser, unfollowUser } from "@/api/user.js";
+// 引入点赞和取消点赞的方法
+import { likeArticle } from "@/api/articles.js";
 export default {
-  data () {
+  data() {
     return {
-      article:{}
-    }
+      article: {}
+    };
   },
- async mounted () {
+  async mounted() {
     // 根据文章id获取文章的详情，实现文章详情的动态渲染
     let res = await getArticleById(this.$route.params.id);
-    console.log(res);
+    // console.log(res);
     // 把后台返回来的文章结果 赋值给article对象 再在页面结构中去渲染
-    this.article = res.data.data   
+    this.article = res.data.data;
+  },
+  methods: {
+    async followUser() {
+      let res;
+      //  满足下面这个条件  说明已经关注过了 就调用取消关注的方法
+      if (this.article.has_follow) {
+        res = await unfollowUser(this.article.user.id);
+      } else {
+        //  满足这个条件 说明没有关注 就调用关注的方法
+        res = await followUser(this.article.user.id);
+      }
+      //  刷新
+      this.article.has_follow = !this.article.has_follow;
+      // console.log(this.article.has_follow);
+
+      this.$toast.success(res.data.message);
+    },
+    async likeThisArticle() {
+      let res = await likeArticle(this.article.id);
+      console.log(res);
+      if(res.data.message=='点赞成功'){
+        this.article.like_length++
+      }else{
+         this.article.like_length--
+      }
+       this.article.has_like = !this.article.has_like
+    this.$toast.success(res.data.message)
+    }
   }
-}
+};
 </script>
 
 <style lang='less' scoped>
@@ -92,11 +128,16 @@ export default {
   }
   > span {
     padding: 5px 15px;
-    background-color: #f00;
-    color: #fff;
+    background-color: #fff;
+    color: #000;
     text-align: center;
+    border: 1px solid #ccc;
     border-radius: 15px;
     font-size: 13px;
+    &.active {
+      color: #fff;
+      background-color: #f00;
+    }
   }
 }
 .detail {
@@ -116,6 +157,15 @@ export default {
     line-height: 24px;
     font-size: 15px;
     padding-bottom: 30px;
+    width: 100%;
+    /deep/.photo {
+      img {
+        width: 100%;
+        display: block;
+      }
+    }
+  }
+  video {
     width: 100%;
   }
 }

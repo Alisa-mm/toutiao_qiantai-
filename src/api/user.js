@@ -32,9 +32,15 @@ export const updateUserById=(id,data)=>{
         data
     })
 }
-// 5.根据文章id获取文章详情
-export const getArticleById =(id)=>{
+// 5.关注用户(id是文章用户的id)
+export const followUser = (id)=>{
     return axios({
-        url:`/post/${id}`
+        url:`/user_follows/${id}`
+    })
+}
+//6. 取消关注用户((id是文章用户的id))
+export const unfollowUser =(id)=>{
+    return axios({
+        url:`/user_unfollow/${id}`
     })
 }
