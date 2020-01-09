@@ -24,7 +24,7 @@
 <!-- 下面这个是使用封装好的单元格 -->
     <hmcell title='我的关注' desc='关注的用户'  @click="$router.push({ name:'MyFollow'})"></hmcell>
     <hmcell title='我的跟帖' desc='跟帖/回复'></hmcell>
-    <hmcell title='我的收藏' desc='文章/视频'></hmcell>
+    <hmcell title='我的收藏' desc='文章/视频' @click="$router.push({ name:'StartArticle'})"></hmcell>
     <hmcell title='设置'></hmcell>
 <!-- 使用封装好的按钮 -->
 <hmbutton @click="exit">退出</hmbutton>

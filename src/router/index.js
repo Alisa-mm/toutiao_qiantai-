@@ -21,6 +21,9 @@ import ArticleDetail from '@/views/articleDetail.vue'
 
 import MyFollow from '@/views/myFollow.vue'
 
+import StartArticle from '@/views/startArticle.vue'
+
+
 
 //创建路由
 let router = new VueRouter({
@@ -40,6 +43,11 @@ let router = new VueRouter({
             name:'MyFollow',
             path:'/myFollow',
             component:MyFollow
+        },
+        {
+            name:'StartArticle',
+            path:'/startArticle',
+            component:StartArticle
         },
         {
             name:'Register',

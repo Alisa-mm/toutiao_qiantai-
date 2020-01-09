@@ -1,15 +1,20 @@
 <template>
   <div class="focus">
+      <!-- 用封装好的头部 -->
       <hmheader title='我的关注'>
           <span slot="left" class="iconfont iconjiantou2" @click="$router.back()"></span>
       </hmheader>
+      <!-- 关注列表 -->
       <div class="list">
           <div class="box" v-for="(item,index) in followList" :key='item.id'>
+              <!-- 左边的图片 -->
               <img :src="item.head_img" alt="">
+              <!-- 中间的模块 上面是昵称 下面是时间 -->
               <div class="center">
                   <p>{{item.nickname}}</p>
                   <span>{{item.create_date}}</span>
               </div>
+              <!-- 右边取消关注-->
               <span @click="unFocusUser(item.id,index)">取消关注</span>
           </div>
       </div>
