@@ -4,7 +4,7 @@
       <!-- 写跟帖的文本框 -->
       <input type="text" placeholder="写跟帖" @focus="handleFocus"  />
       <!-- 评论条数 -->
-      <span class="commentCount">
+      <span class="commentCount" @click="$router.push({path:`/comments/${post.id}`})">
         <i class="iconfont iconpinglun-"></i>
         <em>50</em>
       </span>

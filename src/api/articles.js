@@ -26,3 +26,10 @@ export const collectArticle = (id)=>{
         url:`/post_star/${id}`
     })
 }
+// 5.根据文章id 获取当前文章的评论列表
+export const getCommentList =(id,params)=>{
+    return axios({
+        url:`/post_comment/${id}`,
+        params
+    })
+}

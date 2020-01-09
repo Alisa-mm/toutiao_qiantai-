@@ -23,7 +23,7 @@ import MyFollow from '@/views/myFollow.vue'
 
 import StartArticle from '@/views/startArticle.vue'
 
-
+import Comments from '@/views/comments.vue'
 
 //创建路由
 let router = new VueRouter({
@@ -68,6 +68,11 @@ let router = new VueRouter({
             name:'ArticleDetail',
             path:'/articleDetail/:id',
             component:ArticleDetail
+        },
+        {
+            name:'Comments',
+            path:'/comments/:id',
+            component:Comments
         },
     ]
 })
