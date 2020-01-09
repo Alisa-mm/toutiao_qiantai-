@@ -19,6 +19,9 @@ import Index from '@/views/index.vue'
 
 import ArticleDetail from '@/views/articleDetail.vue'
 
+import MyFollow from '@/views/myFollow.vue'
+
+
 //创建路由
 let router = new VueRouter({
     // 配置路由
@@ -32,6 +35,11 @@ let router = new VueRouter({
             name:'Personal',
             path:'/personal/:id',
             component:Personal
+        },
+        {
+            name:'MyFollow',
+            path:'/myFollow',
+            component:MyFollow
         },
         {
             name:'Register',

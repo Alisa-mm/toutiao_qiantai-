@@ -44,3 +44,9 @@ export const unfollowUser =(id)=>{
         url:`/user_unfollow/${id}`
     })
 }
+// 7.用户关注列表
+export const getUserFollow = ()=>{
+    return axios({
+        url:'/user_follows'
+    })
+}
