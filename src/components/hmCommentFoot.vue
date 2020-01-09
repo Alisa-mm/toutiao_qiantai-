@@ -6,7 +6,7 @@
       <!-- 评论条数 -->
       <span class="commentCount" @click="$router.push({path:`/comments/${post.id}`})">
         <i class="iconfont iconpinglun-"></i>
-        <em>50</em>
+        <em>{{post.comment_length}}</em>
       </span>
       <!-- 收藏图标 -->
       <i class="iconfont iconshoucang " :class="{active:post.has_star}" @click="collectThisArticle"></i>
@@ -44,6 +44,7 @@ export default {
          this.$toast.success(res.data.message)
        }
     }
+    
 };
 </script>
 

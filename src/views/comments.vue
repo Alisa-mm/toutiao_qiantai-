@@ -6,21 +6,21 @@
     </hmheader>
     <!-- 评论列表 -->
     <div class="lists">
-      <div class="item">
+      <div class="item" v-for="comment in commentList" :key='comment.id'>
         <!-- 上面的结构 -->
         <div class="head">
             <!-- 左边头像 -->
-          <img src="../assets/logo.png" alt />
+          <img :src="comment.user.head_img" alt />
           <!-- 中间昵称和时间 -->
           <div>
-            <p>火星网友</p>
+            <p>{{comment.user.nickname}}</p>
             <span>2小时前</span>
           </div>
           <!-- 右边回复 -->
           <span>回复</span>
         </div>
         <!-- 下面评论内容 -->
-        <div class="text">评论内容</div>
+        <div class="text">{{comment.content}}</div>
       </div>
     </div>
   </div>
@@ -28,9 +28,28 @@
 
 <script>
 import hmheader from '@/components/hmheader.vue'
+
+import {getCommentList} from '@/api/articles.js'
 export default {
+  data () {
+    return {
+      commentList:[]
+    }
+  },
   components:{
     hmheader
+  },
+ async mounted () {
+   let id = this.$route.params.id
+    let res =await getCommentList(id,{pageSize:40,pageIndex:1});
+    // console.log(res);
+    this.commentList = res.data.data.length>0? res.data.data:this.commentList
+    this.commentList=this.commentList.map(value=>{
+      value.user.head_img = 'http://127.0.0.1:3000'+value.user.head_img
+      return value
+    })
+
+    
   }
 };
 </script>
