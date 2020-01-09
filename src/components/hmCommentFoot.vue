@@ -9,7 +9,7 @@
         <em>50</em>
       </span>
       <!-- 收藏图标 -->
-      <i class="iconfont iconshoucang"></i>
+      <i class="iconfont iconshoucang " :class="{active:post.has_star}" @click="collectThisArticle"></i>
       <!-- 分享图标 -->
       <i class="iconfont iconfenxiang"></i>
     </div>
@@ -24,7 +24,9 @@
 </template>
 
 <script>
+import {collectArticle} from '@/api/articles.js'
 export default {
+ props:['post'],
     data () {
         return {
            isFocus:false 
@@ -35,7 +37,12 @@ export default {
         handleFocus(){
             this.isFocus=!this.isFocus
             this.$refs.commtext.focus()
-        }
+        },
+       async collectThisArticle(){
+         let res = await collectArticle(this.post.id);
+         this.post.has_star = !this.post.has_star;
+         this.$toast.success(res.data.message)
+       }
     }
 };
 </script>
@@ -118,5 +125,8 @@ export default {
   > i {
     flex: 1;
   }
+}
+.active{
+  color: red;
 }
 </style>

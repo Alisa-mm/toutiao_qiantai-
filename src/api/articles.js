@@ -20,3 +20,9 @@ export const likeArticle = (id)=>{
         url:`/post_like/${id}`
     })
 }
+// 4.根据文章id 收藏文章和取消收藏
+export const collectArticle = (id)=>{
+    return axios({
+        url:`/post_star/${id}`
+    })
+}

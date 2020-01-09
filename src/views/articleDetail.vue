@@ -51,7 +51,7 @@
       <div class="more">更多跟帖</div>
     </div>
     <!-- 添加底部评论栏 -->
-    <hmComment></hmComment>
+    <hmComment :post="article"></hmComment>
   </div>
 </template>
 
@@ -195,7 +195,7 @@ export default {
 }
 .keeps {
   border-top: 5px solid #ddd;
-  padding: 0 15px;
+  padding: 0 15px 50px;
   > h2 {
     line-height: 50px;
     text-align: center;
