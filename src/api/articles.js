@@ -33,3 +33,11 @@ export const getCommentList =(id,params)=>{
         params
     })
 }
+// 6.发表评论
+export const replyComment = (id,data)=>{
+    return axios({
+        method:'post',
+        url:`/post_comment/${id}`,
+        data
+    })
+}

@@ -15,18 +15,19 @@
     </div>
     <!-- 文本域输入框 -->
     <div class="inputcomment" v-show="isFocus">
-      <textarea ref="commtext" rows="5" @blur="isFocus = false"></textarea>
+      <textarea ref="commtext" rows="5"></textarea>
       <div>
-        <span>发送</span>
+        <span @click="sendComment">发送</span>
+        <span @click="cancle">取消</span>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import {collectArticle} from '@/api/articles.js'
+import {collectArticle,replyComment} from '@/api/articles.js'
 export default {
- props:['post'],
+ props:['post','Robj'],
     data () {
         return {
            isFocus:false 
@@ -36,13 +37,41 @@ export default {
         // 获取焦点时触发
         handleFocus(){
             this.isFocus=!this.isFocus
-            this.$refs.commtext.focus()
+           setTimeout(()=>{
+              this.$refs.commtext.focus()
+           },1)
         },
        async collectThisArticle(){
          let res = await collectArticle(this.post.id);
          this.post.has_star = !this.post.has_star;
          this.$toast.success(res.data.message)
-       }
+       },
+      //  发表评论
+      async sendComment(){
+        let data = {content:this.$refs.commtext.value}
+        
+        if(this.Robj){
+          data.parent_id=this.Robj.id
+        }
+        // 拿到发表评论后的数据
+        let res = await replyComment(this.$route.params.id,data)
+        // console.log(res);
+        // 如果发表成功
+        if(res.status===200){
+          // 让输入框隐藏
+          this.isFocus=false
+          //清空输入框
+          this.$refs.commtext.value=''
+          // 发出事件 让评论页刷新
+          this.$emit('refresh')
+        }
+        
+      },
+      // 取消评论
+      cancle(){
+        // 把isFocus设为false 文本框就消失
+        this.isFocus=false
+      }
     }
     
 };

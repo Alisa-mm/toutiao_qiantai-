@@ -17,14 +17,16 @@
             <span>2小时前</span>
           </div>
           <!-- 右边回复 -->
-          <span>回复</span>
+          <span @click="ReplyComment(comment)">回复</span>
         </div>
         <!-- 使用封装好的评论块 判断要不要生成上一级的评论结构 -->
-        <CommentItem v-if="comment.parent" :parent='comment.parent'></CommentItem>
+        <CommentItem v-if="comment.parent" :UpLevel='comment.parent'></CommentItem>
         <!-- 下面评论内容 -->
         <div class="text">{{comment.content}}</div>
       </div>
     </div>
+    <!-- 添加底部评论块 -->
+  <hmCommentFoot :post="article" :Robj="obj" @refresh="refresh"></hmCommentFoot>
   </div>
 </template>
 
@@ -34,17 +36,40 @@ import hmheader from '@/components/hmheader.vue'
 import {getCommentList} from '@/api/articles.js'
 
 import CommentItem from '@/components/hmCommentItem.vue'
+
+import hmCommentFoot from '@/components/hmCommentFoot.vue'
+
+import { getArticleById } from "@/api/articles.js";
+
 export default {
   data () {
     return {
+      obj:'',
+      article:{},
       commentList:[]
     }
   },
   components:{
-    hmheader,CommentItem
+    hmheader,CommentItem,hmCommentFoot
   },
  async mounted () {
-   let id = this.$route.params.id
+   this.init()
+  //  封装
+  //  let id = this.$route.params.id
+  //   let res =await getCommentList(id,{pageSize:40,pageIndex:1});
+  //   console.log(res);
+  //   this.commentList = res.data.data.length>0? res.data.data:this.commentList
+  //   this.commentList=this.commentList.map(value=>{
+  //     value.user.head_img = 'http://127.0.0.1:3000'+value.user.head_img
+  //     return value
+  //   })
+   let res1 = await getArticleById(this.$route.params.id);
+    // console.log(res);
+    // 把后台返回来的文章结果 赋值给article对象 再在页面结构中去渲染
+    this.article = res1.data.data;
+  },
+  methods:{
+    async init(){let id = this.$route.params.id
     let res =await getCommentList(id,{pageSize:40,pageIndex:1});
     console.log(res);
     this.commentList = res.data.data.length>0? res.data.data:this.commentList
@@ -52,9 +77,20 @@ export default {
       value.user.head_img = 'http://127.0.0.1:3000'+value.user.head_img
       return value
     })
-
+    },
+    // 子组件hmCommentFoot发出的事件 父组件刷新页面
+    refresh(){
+      // 发表评论后刷新页面
+      this.init();
     
+    window.scrollTo(0,0)
+    },
+    // 回复评论
+    ReplyComment(comment){
+      this.obj=comment
+    }
   }
+
 };
 </script>
 
@@ -98,6 +134,7 @@ export default {
       font-size: 14px;
       color: #333;
       padding: 20px 0 10px 0;
+      margin-bottom:20px
     }
   }
   
