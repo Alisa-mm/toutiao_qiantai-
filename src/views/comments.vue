@@ -19,6 +19,8 @@
           <!-- 右边回复 -->
           <span>回复</span>
         </div>
+        <!-- 使用封装好的评论块 判断要不要生成上一级的评论结构 -->
+        <CommentItem v-if="comment.parent" :parent='comment.parent'></CommentItem>
         <!-- 下面评论内容 -->
         <div class="text">{{comment.content}}</div>
       </div>
@@ -30,6 +32,8 @@
 import hmheader from '@/components/hmheader.vue'
 
 import {getCommentList} from '@/api/articles.js'
+
+import CommentItem from '@/components/hmCommentItem.vue'
 export default {
   data () {
     return {
@@ -37,12 +41,12 @@ export default {
     }
   },
   components:{
-    hmheader
+    hmheader,CommentItem
   },
  async mounted () {
    let id = this.$route.params.id
     let res =await getCommentList(id,{pageSize:40,pageIndex:1});
-    // console.log(res);
+    console.log(res);
     this.commentList = res.data.data.length>0? res.data.data:this.commentList
     this.commentList=this.commentList.map(value=>{
       value.user.head_img = 'http://127.0.0.1:3000'+value.user.head_img
