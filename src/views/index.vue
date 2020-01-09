@@ -72,9 +72,9 @@ export default {
     // 对数据进行改造（不同栏目的数据应该是不一样的，所以每个栏目应该有属于自己的新闻列表）
     this.cateList = this.cateList.map(value => {
       return {
-        ...value,
-        postList: [],
-        pageIndex: 1,
+        ...value,// 展开对象，我要这个对象的所有成员
+        postList: [],// 这个栏目的新闻列表数据
+        pageIndex: 1,//这个栏目每页所显示的记录数
         pageSize: 5, //这个栏目每页所显示的记录数
         loading: false, //这个栏目的加载状态
         finished: false, //这个栏目的数据是否完全加载完毕
@@ -83,7 +83,7 @@ export default {
     });
     // console.log( this.cateList);
     //  获取默认栏目的新闻数据，并动态渲染  默认栏目就是this.cateList[this.active]
-    // 封装
+    // 这个要重复使用 所以要封装起来
     this.init();
     // let res1 = await getNewList({
     //   pageIndex: this.cateList[this.active].pageIndex,
@@ -97,6 +97,7 @@ export default {
   },
   watch: {
     active() {
+      // 监听 没有加载过的数据栏目才让它加载 加载过的就不用重新加载
       if (this.cateList[this.active].postList.length == 0) {
         this.init();
       }
@@ -110,10 +111,19 @@ export default {
         category: this.cateList[this.active].id
       });
       // console.log(res1.data.data);
+
       // 将当前栏目的loading重置为false //重置之后就不会一直加载
-      this.cateList[this.active].loading = false;
+      // 如果在加载状态 就重置为false
+      if( this.cateList[this.active].loading){
+        this.cateList[this.active].loading = false;
+      }
+      
       // 重置isLoading标记
-      this.cateList[this.active].isLoading=false //重置之后就不会一直加载 
+      // 如果正在下拉刷新 就把isloading重置为false
+      if(this.cateList[this.active].isLoading){
+         this.cateList[this.active].isLoading=false //重置之后就不会一直加载
+      }
+      
       // 4.将finished设置为false，以便可以继续上拉加载
       // this.cateList[this.active].finished=false //这个可以写到下面if后面else中
       //  如果所有数据加载完毕，则需要手动的将当前栏目的finished重置为true,以显示没有更多数据的提示

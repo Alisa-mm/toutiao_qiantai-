@@ -50,6 +50,8 @@
       </div>
       <div class="more">更多跟帖</div>
     </div>
+    <!-- 添加底部评论栏 -->
+    <hmComment></hmComment>
   </div>
 </template>
 
@@ -60,11 +62,16 @@ import { getArticleById } from "@/api/articles.js";
 import { followUser, unfollowUser } from "@/api/user.js";
 // 引入点赞和取消点赞的方法
 import { likeArticle } from "@/api/articles.js";
+// 引入封装好的底部评论栏
+import hmComment from "@/components/hmCommentFoot.vue"
 export default {
   data() {
     return {
       article: {}
     };
+  },
+  components:{
+    hmComment
   },
   async mounted() {
     // 根据文章id获取文章的详情，实现文章详情的动态渲染
