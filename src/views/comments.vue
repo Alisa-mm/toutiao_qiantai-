@@ -20,7 +20,7 @@
           <span @click="ReplyComment(comment)">回复</span>
         </div>
         <!-- 使用封装好的评论块 判断要不要生成上一级的评论结构 -->
-        <CommentItem v-if="comment.parent" :UpLevel='comment.parent'></CommentItem>
+        <CommentItem v-if="comment.parent" :UpLevel='comment.parent' @replyComment="ReplyComment"></CommentItem>
         <!-- 下面评论内容 -->
         <div class="text">{{comment.content}}</div>
       </div>
