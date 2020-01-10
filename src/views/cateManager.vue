@@ -35,7 +35,7 @@ export default {
   async mounted() {
     // 调用方法 渲染数据
     // 获取已添加栏目数据
-    if(localStorage.setItem("cate_data",JSON.stringify(this.cateList))){
+    if(localStorage.getItem("cate_data")){
         this.cateList=JSON.parse(localStorage.getItem("cate_data"));
     }else{
         let res = await getCateList();
@@ -51,7 +51,7 @@ export default {
         }
     }
     // 获取未添加栏目的数据
-    if(localStorage.setItem("add_data",JSON.stringify(this.unaddCateList))){
+    if(localStorage.getItem("add_data")){
         this.unaddCateList=JSON.parse(localStorage.getItem("add_data"))
     }
   },

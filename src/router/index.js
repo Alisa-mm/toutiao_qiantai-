@@ -27,6 +27,7 @@ import Comments from '@/views/comments.vue'
 
 import CateManager from '@/views/cateManager.vue'
 
+import Search from '@/views/searchArticle.vue'
 
 //创建路由
 let router = new VueRouter({
@@ -81,6 +82,11 @@ let router = new VueRouter({
             name:'CateManager',
             path:'/cateManager',
             component:CateManager
+        },
+        {
+            name:'Search',
+            path:'/search',
+            component:Search
         }
     ]
 })

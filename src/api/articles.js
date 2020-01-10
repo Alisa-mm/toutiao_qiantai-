@@ -47,3 +47,10 @@ export const getCateList = ()=>{
         url:'/category', 
     })
 }
+// 8.搜索文章
+export const searchArticle = (params)=>{
+    return axios({
+        url:'/post_search',
+        params
+    })
+}
