@@ -25,6 +25,9 @@ import StartArticle from '@/views/startArticle.vue'
 
 import Comments from '@/views/comments.vue'
 
+import CateManager from '@/views/cateManager.vue'
+
+
 //创建路由
 let router = new VueRouter({
     // 配置路由
@@ -74,6 +77,11 @@ let router = new VueRouter({
             path:'/comments/:id',
             component:Comments
         },
+        {
+            name:'CateManager',
+            path:'/cateManager',
+            component:CateManager
+        }
     ]
 })
 // 导航守卫

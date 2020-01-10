@@ -14,6 +14,8 @@
       <div class="user" @click="$router.push({path:`personal/${id}`})">
         <van-icon name="manager-o" />
       </div>
+       <!-- 添加栏目管理入口 +号 -->
+         <span @click="$router.push({name:'CateManager'})" style="font-size:30px">+</span>
     </div>
     <!-- 标签页 -->
     <div class="nav">
@@ -37,6 +39,7 @@
           </van-list>
         </van-tab>
       </van-tabs>
+      
     </div>
   </div>
 </template>
@@ -192,6 +195,21 @@ export default {
   .user {
     font-size: 25px;
     padding: 0 10px;
+  }
+}
+/deep/.van-sticky{
+  padding-right: 50px;
+  &::after{
+    content: '+';
+    position: absolute;
+    width: 51px;
+    height: 44px;
+    background-color: #fff;
+    top: 0;
+    right: 0;
+    text-align: center;
+    line-height: 42px;
+    font-size: 35px;
   }
 }
 </style>
