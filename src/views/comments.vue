@@ -26,7 +26,7 @@
       </div>
     </div>
     <!-- 添加底部评论块 -->
-  <hmCommentFoot :post="article" :Robj="obj" @refresh="refresh"></hmCommentFoot>
+  <hmCommentFoot :post="article" :Robj="obj" @refresh="refresh" @reset='obj=null'></hmCommentFoot>
   </div>
 </template>
 
@@ -69,9 +69,11 @@ export default {
     this.article = res1.data.data;
   },
   methods:{
-    async init(){let id = this.$route.params.id
+    async init(){
+      let id = this.$route.params.id
+      // 获取评论列表的数据
     let res =await getCommentList(id,{pageSize:40,pageIndex:1});
-    console.log(res);
+    // console.log(res);
     this.commentList = res.data.data.length>0? res.data.data:this.commentList
     this.commentList=this.commentList.map(value=>{
       value.user.head_img = 'http://127.0.0.1:3000'+value.user.head_img
@@ -85,7 +87,12 @@ export default {
     
     window.scrollTo(0,0)
     },
-    // 回复评论
+    // 回复评论要实现两个需求 1.单击回复让底部文本框弹出来 2.要知道我回复的是谁的评论 要拿到这个评论的id
+   /*  注意父传子要满足两个条件 
+   1.子组件要定义props属性 2.要在父组件中使用子组件的位置传
+    但是我们传值是在span的回复中传，第二条不满足 所以我们先要在span中 把comment传给一个对象obj 再把这个对象obj给父组件Robj 再让父组件把Robj给子组件就可以了 */
+    // 
+    // 点击回复的时候 把comment赋值给obj ，然后把obj传给子元素hmCommentFoot
     ReplyComment(comment){
       this.obj=comment
     }

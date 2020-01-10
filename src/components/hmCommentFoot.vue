@@ -4,7 +4,7 @@
       <!-- 写跟帖的文本框 -->
       <input type="text" placeholder="写跟帖" @focus="handleFocus"  />
       <!-- 评论条数 -->
-      <span class="commentCount" @click="$router.push({path:`/comments/${post.id}`})">
+      <span class="commentCount" @click="$router.push({path:`/comments/${post.id}`})" v-if="$route.name=='ArticleDetail'">
         <i class="iconfont iconpinglun-"></i>
         <em>{{post.comment_length}}</em>
       </span>
@@ -33,6 +33,16 @@ export default {
            isFocus:false 
         }
     },
+    // 监听obj值的变化,如果发现值变化了,则弹出输入框
+  watch:{
+    Robj(){
+      console.log('aa')
+      // 点击了才弹框
+      if(this.Robj){
+        this.isFocus = true
+      }
+    }
+  },
     methods:{
         // 获取焦点时触发
         handleFocus(){
@@ -46,10 +56,10 @@ export default {
          this.post.has_star = !this.post.has_star;
          this.$toast.success(res.data.message)
        },
-      //  发表评论
+      //  发表评论 不是回复别人
       async sendComment(){
         let data = {content:this.$refs.commtext.value}
-        
+        // 如果有
         if(this.Robj){
           data.parent_id=this.Robj.id
         }
@@ -71,6 +81,9 @@ export default {
       cancle(){
         // 把isFocus设为false 文本框就消失
         this.isFocus=false
+        // 取消的时候 要重置obj 只能让父组件重置
+          this.$emit('reset')
+
       }
     }
     
