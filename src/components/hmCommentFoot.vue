@@ -96,7 +96,7 @@ export default {
     position: fixed;
     bottom: 0;
     left: 0;
-    background-color: #fff;
+  
 }
 .inputcomment {
   padding: 10px;
@@ -135,6 +135,7 @@ export default {
   margin-top: 20px;
   display: flex;
   text-align: center;
+  background-color: #fff;
   position: absolute;
   bottom: 0;
   left: 0;

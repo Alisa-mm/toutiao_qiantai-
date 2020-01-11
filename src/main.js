@@ -4,7 +4,7 @@ import App from './App.vue'
 import router from '@/router/index.js'
 
 // 引入提示插件
-import { Toast , Cell, CellGroup,Uploader,Dialog,Field,Picker,Icon,Tab, Tabs,List,PullRefresh,Search } from 'vant'
+import { Toast ,Button,Cell, CellGroup,Uploader,Dialog,Field,Picker,Icon,Tab, Tabs,List,PullRefresh,Search,SwipeCell } from 'vant'
 Vue.use(Toast)
 .use(Cell)
 .use(CellGroup)
@@ -18,6 +18,8 @@ Vue.use(Toast)
 .use(List)
 .use(PullRefresh)
 .use(Search)
+.use(SwipeCell)
+.use(Button)
 
 Vue.config.productionTip = false
 

@@ -14,12 +14,11 @@
       <div class="user" @click="$router.push({path:`personal/${id}`})">
         <van-icon name="manager-o" />
       </div>
-       <!-- 添加栏目管理入口 +号 -->
-         <span @click="$router.push({name:'CateManager'})" style="font-size:30px">+</span>
     </div>
     <!-- 标签页 -->
     <div class="nav">
       <van-tabs v-model="active" sticky swipeable>
+         <van-icon name="plus" slot="nav-right" @click="$router.push({path:'/cateManager'})" />
         <!-- 遍历cateList动态生成标签页 -->
         <van-tab :title="value.name" v-for="value in cateList" :key="value.id">
           <!-- 添加上拉加载结构 -->
@@ -69,9 +68,15 @@ export default {
     this.id = JSON.parse(localStorage.getItem("userData") || "{}").id;
     // console.log(this.id);//undefined
     //获取所有栏目数据
-    let res = await getCateList();
+    if(localStorage.getItem('cate_data')){
+      this.cateList=JSON.parse(localStorage.getItem('cate_data'))
+      // 人为添加头条和关注
+       this.cateList.unshift(...[{id:1,name:'关注',is_top:1},{id:999,name:'头条',is_top:1}])
+    }else{
+      let res = await getCateList();
     // console.log(res);
     this.cateList = res.data.data;
+    }
     // 对数据进行改造（不同栏目的数据应该是不一样的，所以每个栏目应该有属于自己的新闻列表）
     this.cateList = this.cateList.map(value => {
       return {
@@ -197,19 +202,11 @@ export default {
     padding: 0 10px;
   }
 }
-/deep/.van-sticky{
-  padding-right: 50px;
-  &::after{
-    content: '+';
-    position: absolute;
-    width: 51px;
-    height: 44px;
-    background-color: #fff;
-    top: 0;
-    right: 0;
-    text-align: center;
-    line-height: 42px;
-    font-size: 35px;
-  }
+.van-icon-plus{
+  position: sticky;
+  right:0;
+  font-size: 20px;
+  line-height: 44px;
+  background-color: #fff;
 }
 </style>

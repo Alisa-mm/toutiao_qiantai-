@@ -5,7 +5,7 @@
       <p class="content">{{post.title}}</p>
       <p class="info">
         <span>{{post.user.nickname}}</span>
-        <span>{{post.comment_length}}</span>
+        <span>{{post.comment_length ||( post.comments&&post.comments.length)}}</span>
       </p>
     </div>
     <img :src="post.cover[0].url" alt />
