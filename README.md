@@ -1,4 +1,4 @@
-# Headlines background
+# Headlines
 
 ## Project setup
 ```
